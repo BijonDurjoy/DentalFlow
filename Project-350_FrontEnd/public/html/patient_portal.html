@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Patient Portal</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/dashboard_style.css" />
+  </head>
+
+  <body>
+    <table border="1">
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+        }
+
+        table {
+          border-collapse: collapse;
+          width: 30%;
+          margin: 0 auto;
+          margin-top: 50px;
+          text-align: center;
+        }
+
+        th,
+        td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+        }
+
+        th {
+          background-color: #30a4f1;
+          color: white;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+        .booking-box {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          height: 20%;
+
+          width: 30%;
+          margin: 0 auto;
+          margin-top: 50px;
+          text-align: center;
+          background-color: rgba(14, 129, 43, 0.4);
+        }
+
+        .booking-box label,
+        .booking-box input,
+        .booking-box button {
+          margin: 15px;
+        }
+      </style>
+      <caption>
+        <h1>Patient Booking Table</h1>
+      </caption>
+      <thead>
+        <tr>
+          <th>Doctor</th>
+          <th>Specialization</th>
+          <th>Time Slot</th>
+          <th>Book</th>
+        </tr>
+      </thead>
+      <tbody id="slots"></tbody>
+    </table>
+
+    <table border="1">
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+        }
+
+        table {
+          border-collapse: collapse;
+          width: 30%;
+          margin: 0 auto;
+          margin-top: 50px;
+          text-align: center;
+        }
+
+        th,
+        td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+        }
+
+        th {
+          background-color: #30a4f1;
+          color: white;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+        .booking-box {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          height: 20%;
+
+          width: 30%;
+          margin: 0 auto;
+          margin-top: 50px;
+          text-align: center;
+          background-color: rgba(14, 129, 43, 0.4);
+        }
+
+        .booking-box label,
+        .booking-box input,
+        .booking-box button {
+          margin: 15px;
+        }
+      </style>
+      <caption>
+        <h1>My appointment</h1>
+      </caption>
+      <thead>
+        <tr>
+          <th>Doctor</th>
+          <th>Specialization</th>
+          <th>Date</th>
+          <th>Time Slot</th>
+        </tr>
+      </thead>
+      <tbody id="bookings"></tbody>
+    </table>
+
+    <table border="1">
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+        }
+
+        table {
+          border-collapse: collapse;
+          width: 30%;
+          margin: 0 auto;
+          margin-top: 50px;
+          text-align: center;
+        }
+
+        th,
+        td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+        }
+
+        th {
+          background-color: #30a4f1;
+          color: white;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+        .booking-box {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          height: 20%;
+
+          width: 30%;
+          margin: 0 auto;
+          margin-top: 50px;
+          text-align: center;
+          background-color: rgba(14, 129, 43, 0.4);
+        }
+
+        .booking-box label,
+        .booking-box input,
+        .booking-box button {
+          margin: 15px;
+        }
+      </style>
+      <caption>
+        <h1>My prescriptions</h1>
+      </caption>
+      <thead>
+        <tr>
+          <th>Doctor</th>
+
+          <th>Date</th>
+          <th>Medicine</th>
+          <th>Rx</th>
+          <th>CC</th>
+          <th>Treatment</th>
+          <th>O_E</th>
+        </tr>
+      </thead>
+      <tbody id="prescriptions"></tbody>
+    </table>
+
+    <div id="bookingBox" class="booking-box">
+      <label for="bookingDate">Choose Date:</label>
+      <input type="date" id="bookingDate" />
+      <button onclick="confirmBooking()">Confirm</button>
+    </div>
+    <!-- partial:index.partial.html -->
+    <ol style="--length: 5" role="list">
+      <!-- <li style="--i: 2">
+			<h1 class="text-white">Find a doctor</h1>
+			<h2 class="text-white">Meet the expert and discuss your need.</h2>
+			<form action="">
+				<label for="" class="text-white">Problem Category</label>
+				<br>
+				<input type="text">
+				<br>
+				<br>
+
+
+			</form>
+		</li> -->
+      <!-- <li style="--i: 2">
+			<h1 class="text-white">Book an appointment</h1>
+			<h2 class="text-white">One to one consultancy with renowned practitioners.</h2>
+			<form action="">
+				<label for="" class="text-white">Registration no.</label>
+				<br>
+				<input type="Number" placeholder="BDMC Registration Number of the doctor">
+				<br>
+				<br>
+				<label for="" class="text-white">Date</label>
+				<br>
+				<input type="date">
+				<br>
+				<br>
+				<label for="" class="text-white">Time</label>
+				<br>
+				<input type="time">
+
+
+			</form>
+
+		</li> -->
+     
+    </ol>
+
+    <section id="logout">
+      <button id="logout-button">Logout</button>
+    </section>
+    <!-- partial -->
+
+    <script src="../apppp.js"></script>
+    <script>
+      let patientData;
+      let bookingID;
+
+      const dateInput = document.getElementById('bookingDate');
+      dateInput.setAttribute('min', new Date().toISOString().slice(0, 10));
+      dateInput.setAttribute(
+        'max',
+        new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .slice(0, 10)
+      );
+
+      async function getPatient() {
+        try {
+          const resp = await fetch(
+            'http://localhost:8000/api/v1/auth/getPatient',
+            {
+              method: 'GET',
+              credentials: 'include',
+            }
+          );
+          const result = await resp.json();
+          // if (!result.success) {
+          //   alert('Please Login to your account first');
+          //   window.location.href = 'patient_register.html';
+          //   return;
+          // }
+          patientData = result.data;
+
+          console.log(patientData);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      async function getAllSlots() {
+        try {
+          const resp = await fetch('http://localhost:8000/api/v1/slots', {
+            method: 'GET',
+            credentials: 'include',
+          });
+          const result = await resp.json();
+          console.log(result);
+          if (result.success) {
+            document.getElementById('slots').innerHTML = `
+          ${result.data
+            .map((item, value) => {
+              return `<tr class="slot" id="${item.SlotID}">
+          <td>${item.FullName}</td>
+          <td>${item.Specialization}</td>
+          <td>${item.starting_time}</td>
+          <td><button onclick="bookAppointment()" class="bookBtn">Book</button></td>
+        </tr>`;
+            })
+            .join(' ')}
+          `;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      async function getAllPrescriptions() {
+        try {
+          const resp = await fetch(
+            `http://localhost:8000/api/v1/slots/prescription/${patientData.UserID}`,
+            {
+              method: 'GET',
+              credentials: 'include',
+            }
+          );
+          const result = await resp.json();
+          console.log(result);
+          if (result.success) {
+            document.getElementById('prescriptions').innerHTML = `
+              ${result.data
+                .map((item, value) => {
+                  return `<tr class="slot" id="${item.SlotID}">
+              <td>${item.docName}</td>
+
+              <td>${item.Date.split('T')[0]}</td>
+              <td>${item.Medicine}</td>
+              <td>${item.Rx}</td>
+              <td>${item.CC}</td>
+              <td>${item.Treatment_Plan}</td>
+              <td>${item.O_E}</td>
+              
+            </tr>`;
+                })
+                .join(' ')}
+              `;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      async function getAllBookings() {
+        try {
+          const resp = await fetch('http://localhost:8000/api/v1/bookings', {
+            method: 'GET',
+            credentials: 'include',
+          });
+          const result = await resp.json();
+          console.log(result);
+          if (result.success) {
+            document.getElementById('bookings').innerHTML = `
+          ${result.data
+            .map((item, value) => {
+              return `<tr class="appointment" id="${item.BookID}">
+         <td>${item.FullName}</td>
+          <td>${item.Specialization}</td>
+          <td>${item.DateofBooking.split('T')[0]}</td>
+          <td>${item.starting_time}</td>
+        </tr>`;
+            })
+            .join(' ')}
+          `;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      function bookAppointment() {
+        document.getElementById('bookingBox').style.display = 'block';
+      }
+
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('bookBtn')) {
+          // console.log(e.target.parentElement.parentElement.id);
+
+          bookingID = e.target.parentElement.parentElement.id;
+        }
+      });
+
+      async function confirmBooking(slotID) {
+        let bookingDate = document.getElementById('bookingDate').value;
+
+        document.getElementById('bookingBox').style.display = 'none';
+        console.log({ bookingID, bookingDate });
+        try {
+          const resp = await fetch('http://localhost:8000/api/v1/bookings', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ slotID: bookingID, bookingDate }),
+          });
+          const result = await resp.json();
+          // console.log(result);
+          if (result.success) {
+            // console.log(result);
+            alert('Your appointment is booked for ' + bookingDate);
+            await getAllBookings();
+          } else {
+            alert('This slot is already booked');
+          }
+        } catch (error) {
+          alert('some error happened');
+          console.log(error);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', async function () {
+        await getPatient();
+        await getAllSlots();
+        await getAllBookings();
+        await getAllPrescriptions();
+
+        const logoutButton = document.getElementById('logout-button');
+        logoutButton.addEventListener('click', function () {
+          logout('http://localhost:8000/api/v1/auth/logout');
+        });
+      });
+    </script>
+  </body>
+</html>
